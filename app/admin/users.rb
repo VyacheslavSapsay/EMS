@@ -3,6 +3,17 @@ ActiveAdmin.register User do
   filter :email
   filter :first_name
   filter :last_name
+  filter :created_at
+
+  config.sort_order = 'last_name_asc'
+
+  index do
+    selectable_column
+    column :email
+    column :first_name
+    column :last_name
+    actions
+  end
 
   show do
     attributes_table do
@@ -10,10 +21,6 @@ ActiveAdmin.register User do
       row :full_name do
         "#{user.first_name} #{user.last_name}"
       end
-      row :encrypted_password
-      row :reset_password_token
-      row :created_at
-      row :updated_at
     end
   end
 
@@ -26,11 +33,11 @@ ActiveAdmin.register User do
     end
   end
 
-  index do
-    selectable_column
-    column :email
-    column :first_name
-    column :last_name
-    actions
+  sidebar :Details, only: :show do
+    attributes_table do
+      row :created_at
+      row :updated_at
+    end
   end
+
 end
