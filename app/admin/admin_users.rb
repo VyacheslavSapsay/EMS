@@ -1,12 +1,12 @@
 ActiveAdmin.register AdminUser do
-  permit_params :email, :password, :password_confirmation, :first_name, :last_name
+  config.sort_order = 'last_name_asc'
+  
+  permit_params :email, :first_name, :last_name, :password, :password_confirmation
 
   filter :email
   filter :first_name
   filter :last_name
   filter :created_at
-
-  config.sort_order = 'last_name_asc'
 
   index do
     selectable_column
@@ -28,18 +28,17 @@ ActiveAdmin.register AdminUser do
   form title: 'A custom title' do |f|
     inputs 'Info' do
       input :email
-      input :first_name, label: "First name"
-      input :last_name, label: "Last name"
-      input :password, label: "Password"
+      input :first_name
+      input :last_name
+      input :password
       actions
     end
   end
 
-  sidebar :Details, only: :show do
+  sidebar :details, only: :show do
     attributes_table do
       row :created_at
       row :updated_at
     end
   end
-
 end

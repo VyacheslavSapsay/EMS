@@ -4,8 +4,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.3'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
 gem 'pg', '>= 0.18', '< 2.0'
-gem 'devise'
 gem 'activeadmin'
+gem 'devise'
 gem "pundit"
 gem 'puma', '~> 4.1'
 gem 'sass-rails', '>= 6'
