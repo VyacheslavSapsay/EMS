@@ -1,6 +1,6 @@
 ActiveAdmin.register AdminUser do
   config.sort_order = 'last_name_asc'
-  
+
   permit_params :email, :first_name, :last_name, :password, :password_confirmation
 
   filter :email
@@ -22,6 +22,7 @@ ActiveAdmin.register AdminUser do
       row :full_name do
         "#{admin_user.first_name} #{admin_user.last_name}"
       end
+      row :role, class: "user-role"
     end
   end
 
@@ -31,6 +32,7 @@ ActiveAdmin.register AdminUser do
       input :first_name
       input :last_name
       input :password
+      input :role if current_admin_user.role == "super"
       actions
     end
   end

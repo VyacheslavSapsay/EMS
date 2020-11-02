@@ -1,10 +1,12 @@
 class AdminUser < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  extend Enumerize
+
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable
 
   validates_presence_of :first_name, :last_name
+
+  enumerize :role, in: %i[super user]
 
   def display_name
     "#{first_name} #{last_name}"

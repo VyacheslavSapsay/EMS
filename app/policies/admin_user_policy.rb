@@ -5,7 +5,11 @@ class AdminUserPolicy < ApplicationPolicy
     end
   end
 
-  # def destroy?
-  #   current_user.id == 2
-  # end
+  def destroy?
+    user.role == "super" && user.id != record.id
+  end
+
+  def update?
+    user.role == "super" || user.id == record.id
+  end
 end
