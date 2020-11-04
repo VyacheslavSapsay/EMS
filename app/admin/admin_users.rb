@@ -20,13 +20,13 @@ ActiveAdmin.register AdminUser do
     attributes_table do
       row :email
       row :full_name do
-        "#{admin_user.first_name} #{admin_user.last_name}"
+        admin_user.display_name
       end
       row :role, class: "user-role"
     end
   end
 
-  form title: 'A custom title' do |f|
+  form title: 'Form' do |f|
     inputs 'Info' do
       input :email
       input :first_name
