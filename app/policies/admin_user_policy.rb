@@ -5,6 +5,10 @@ class AdminUserPolicy < ApplicationPolicy
     end
   end
 
+  def show?
+    user.id == record.id || user.role == "super"
+  end
+
   def destroy?
     user.role == "super" && user.id != record.id
   end

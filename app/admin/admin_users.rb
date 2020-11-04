@@ -22,7 +22,6 @@ ActiveAdmin.register AdminUser do
       row :full_name do
         admin_user.display_name
       end
-      row :role, class: "user-role"
     end
   end
 
@@ -31,8 +30,7 @@ ActiveAdmin.register AdminUser do
       input :email
       input :first_name
       input :last_name
-      input :password
-      input :role if current_admin_user.role == "super"
+      input :password if request.original_url == new_admin_admin_user_url
       actions
     end
   end
