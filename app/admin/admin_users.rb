@@ -1,7 +1,8 @@
 ActiveAdmin.register AdminUser do
   config.sort_order = 'last_name_asc'
 
-  permit_params :email, :first_name, :last_name, :password, :password_confirmation
+  permit_params :email, :first_name, :last_name, :password,
+                :password_confirmation, :role
 
   filter :email
   filter :first_name
@@ -30,7 +31,7 @@ ActiveAdmin.register AdminUser do
       input :email
       input :first_name
       input :last_name
-      input :password
+      input :password if request.original_url == new_admin_admin_user_url
       actions
     end
   end
