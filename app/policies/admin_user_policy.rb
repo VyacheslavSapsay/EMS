@@ -22,7 +22,7 @@ class AdminUserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.super? && not owner?
+    user.super? && !owner?
   end
 
   private
