@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_02_112005) do
+ActiveRecord::Schema.define(version: 2020_11_09_101108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -31,6 +37,43 @@ ActiveRecord::Schema.define(version: 2020_11_02_112005) do
     t.index ["role"], name: "index_admin_users_on_role"
   end
 
+  create_table "agents", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.string "description"
+    t.datetime "occured_at"
+    t.bigint "debit_amount"
+    t.bigint "credit_amount"
+    t.bigint "account_id", null: false
+    t.bigint "agent_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "author_id"
+    t.index ["account_id"], name: "index_transactions_on_account_id"
+    t.index ["agent_id"], name: "index_transactions_on_agent_id"
+    t.index ["author_id"], name: "index_transactions_on_author_id"
+    t.index ["category_id"], name: "index_transactions_on_category_id"
+    t.index ["project_id"], name: "index_transactions_on_project_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -45,4 +88,9 @@ ActiveRecord::Schema.define(version: 2020_11_02_112005) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "transactions", "accounts"
+  add_foreign_key "transactions", "admin_users", column: "author_id"
+  add_foreign_key "transactions", "agents"
+  add_foreign_key "transactions", "categories"
+  add_foreign_key "transactions", "projects"
 end
