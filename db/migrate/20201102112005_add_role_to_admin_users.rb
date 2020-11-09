@@ -1,6 +1,5 @@
 class AddRoleToAdminUsers < ActiveRecord::Migration[6.0]
   def change
-    add_column :admin_users, :role, :string, default: "user"
+    add_column :admin_users, :role, :string, default: "user", index: true
   end
-  add_index :admin_users, :email
 end

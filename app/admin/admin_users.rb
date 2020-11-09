@@ -32,6 +32,7 @@ ActiveAdmin.register AdminUser do
       input :email
       input :first_name
       input :last_name
+      input :role if user.super?
       input :password if request.original_url == new_admin_admin_user_url
       actions
     end

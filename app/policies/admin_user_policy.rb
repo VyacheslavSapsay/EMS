@@ -30,5 +30,4 @@ class AdminUserPolicy < ApplicationPolicy
   def owner?
     user.id == record.id
   end
-
 end
