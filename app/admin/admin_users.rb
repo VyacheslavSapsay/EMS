@@ -1,6 +1,8 @@
 ActiveAdmin.register AdminUser do
   config.sort_order = 'last_name_asc'
 
+  menu parent: "System"
+
   permit_params :email, :first_name, :last_name, :password,
     :password_confirmation, :role
 

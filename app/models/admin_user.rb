@@ -1,6 +1,8 @@
 class AdminUser < ApplicationRecord
   extend Enumerize
 
+  has_many :transactions, foreign_key: :author_id
+
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable
 
