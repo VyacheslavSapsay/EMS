@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2020_11_02_112005) do
     t.string "role", default: "user"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+    t.index ["role"], name: "index_admin_users_on_role"
   end
 
   create_table "users", force: :cascade do |t|
