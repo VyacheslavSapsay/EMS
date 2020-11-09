@@ -10,7 +10,7 @@ class AdminUserPolicy < ApplicationPolicy
   end
 
   def show?
-    user.super? || user.id == record.id
+    user.super? || owner?
   end
 
   def create?
@@ -18,10 +18,17 @@ class AdminUserPolicy < ApplicationPolicy
   end
 
   def update?
-    user.super? || user.id == record.id
+    user.super? || owner?
   end
 
   def destroy?
-    user.super? && user.id != record.id
+    user.super? && not owner?
   end
+
+  private
+
+  def owner?
+    user.id == record.id
+  end
+
 end
