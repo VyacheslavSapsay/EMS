@@ -61,9 +61,9 @@ ActiveRecord::Schema.define(version: 2020_11_09_101108) do
     t.bigint "debit_amount"
     t.bigint "credit_amount"
     t.bigint "account_id", null: false
-    t.bigint "agent_id", null: false
-    t.bigint "category_id", null: false
-    t.bigint "project_id", null: false
+    t.bigint "agent_id"
+    t.bigint "category_id"
+    t.bigint "project_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "author_id"
