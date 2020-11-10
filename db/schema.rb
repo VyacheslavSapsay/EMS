@@ -60,17 +60,19 @@ ActiveRecord::Schema.define(version: 2020_11_09_101108) do
     t.datetime "occured_at"
     t.bigint "debit_amount"
     t.bigint "credit_amount"
-    t.bigint "account_id", null: false
     t.bigint "agent_id"
     t.bigint "category_id"
     t.bigint "project_id"
+    t.bigint "debit_account_id"
+    t.bigint "credit_account_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "author_id"
-    t.index ["account_id"], name: "index_transactions_on_account_id"
     t.index ["agent_id"], name: "index_transactions_on_agent_id"
     t.index ["author_id"], name: "index_transactions_on_author_id"
     t.index ["category_id"], name: "index_transactions_on_category_id"
+    t.index ["credit_account_id"], name: "index_transactions_on_credit_account_id"
+    t.index ["debit_account_id"], name: "index_transactions_on_debit_account_id"
     t.index ["project_id"], name: "index_transactions_on_project_id"
   end
 
@@ -88,7 +90,8 @@ ActiveRecord::Schema.define(version: 2020_11_09_101108) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "transactions", "accounts"
+  add_foreign_key "transactions", "accounts", column: "credit_account_id"
+  add_foreign_key "transactions", "accounts", column: "debit_account_id"
   add_foreign_key "transactions", "admin_users", column: "author_id"
   add_foreign_key "transactions", "agents"
   add_foreign_key "transactions", "categories"
