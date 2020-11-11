@@ -1,14 +1,4 @@
 class AdminUserPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      if user.super?
-        scope.all
-      else
-        scope.where(id: user.id)
-      end
-    end
-  end
-
   def show?
     user.super? || owner?
   end
@@ -23,6 +13,12 @@ class AdminUserPolicy < ApplicationPolicy
 
   def destroy?
     user.super? && !owner?
+  end
+
+  class Scope < Scope
+    def resolve
+      user.super? ? scope.all : scope.where(id: user.id)
+    end
   end
 
   private

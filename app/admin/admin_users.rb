@@ -32,8 +32,8 @@ ActiveAdmin.register AdminUser do
       input :email
       input :first_name
       input :last_name
-      input :role if user.super?
-      input :password if request.original_url == new_admin_admin_user_url
+      input :role if current_admin_user.super?
+      input :password
       actions
     end
   end
@@ -42,6 +42,13 @@ ActiveAdmin.register AdminUser do
     attributes_table do
       row :created_at
       row :updated_at
+    end
+  end
+
+  controller do
+    def update_resource(object, attributes)
+      update_method = attributes.first[:password].present? ? :update_attributes : :update_without_password
+      object.send(update_method, *attributes)
     end
   end
 end
