@@ -1,10 +1,4 @@
 class AccountPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope.all
-    end
-  end
-
   def create?
     user.super?
   end
@@ -15,5 +9,11 @@ class AccountPolicy < ApplicationPolicy
 
   def destroy?
     user.super?
+  end
+
+  class Scope < Scope
+    def resolve
+      scope.all
+    end
   end
 end

@@ -8,8 +8,10 @@ class Transaction < ApplicationRecord
   belongs_to :category, optional: true
   belongs_to :project, optional: true
 
-  validate :correct_date, :debit_or_credit?, :both_fields_filled?
+  validate :correct_date, :debit_or_credit?
   validates :description, :occured_at, presence: true
+  validates :debit_amount_cents, :credit_amount_cents,
+  numericality: { greater_than_or_equal_to: 0, message: "must be greater than 0" }
 
   monetize :credit_amount_cents, :debit_amount_cents
 
@@ -26,21 +28,17 @@ class Transaction < ApplicationRecord
     elsif credit_account_id || debit_account_id
       if credit_account_id
         errors.add(:credit_amount, "Can't be blank") if credit_amount == 0
+        errors.add(:debit_amount,
+          "must be 0") if credit_amount && debit_amount > 0
       else
         errors.add(:debit_amount, "Can't be blank") if debit_amount == 0
+        errors.add(:credit_amount,
+          "must be 0") if credit_amount > 0 && debit_amount
       end
     else
       errors.add(:base, :credit_or_debit_account_blank,
         message: "Choose debit or credit account")
     end
   end
-
-  def both_fields_filled?
-    if credit_amount > 0 && debit_amount > 0
-      errors.add(:base, :credit_and_debit_amount_filled,
-        message: "Only corresponding field must be filled")
-    end
-  end
-
 
 end
