@@ -6,6 +6,7 @@ gem 'activeadmin'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'devise'
 gem 'enumerize'
+gem 'money-rails', '~>1.12'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'pundit'
 gem 'puma', '~> 4.1'

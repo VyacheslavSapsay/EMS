@@ -3,8 +3,8 @@ class CreateTransactions < ActiveRecord::Migration[6.0]
       create_table :transactions do |t|
         t.string :description
         t.timestamp :occured_at
-        t.bigint :debit_amount
-        t.bigint :credit_amount
+        t.monetize :debit_amount
+        t.monetize :credit_amount
         t.belongs_to :agent, foreign_key: true
         t.belongs_to :category, foreign_key: true
         t.belongs_to :project, foreign_key: true

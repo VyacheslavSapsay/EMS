@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 2020_11_09_101108) do
     t.string "role", default: "user"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
-    t.index ["role"], name: "index_admin_users_on_role"
   end
 
   create_table "agents", force: :cascade do |t|
@@ -58,8 +57,10 @@ ActiveRecord::Schema.define(version: 2020_11_09_101108) do
   create_table "transactions", force: :cascade do |t|
     t.string "description"
     t.datetime "occured_at"
-    t.bigint "debit_amount"
-    t.bigint "credit_amount"
+    t.integer "debit_amount_cents", default: 0, null: false
+    t.string "debit_amount_currency", default: "USD", null: false
+    t.integer "credit_amount_cents", default: 0, null: false
+    t.string "credit_amount_currency", default: "USD", null: false
     t.bigint "agent_id"
     t.bigint "category_id"
     t.bigint "project_id"
