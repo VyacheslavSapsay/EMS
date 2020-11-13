@@ -2,7 +2,7 @@ class CreateTransactions < ActiveRecord::Migration[6.0]
   def change
       create_table :transactions do |t|
         t.string :description
-        t.timestamp :occured_at
+        t.datetime :occured_at, null: false
         t.monetize :debit_amount
         t.monetize :credit_amount
         t.belongs_to :agent, foreign_key: true

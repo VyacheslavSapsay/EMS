@@ -8,18 +8,15 @@ class Transaction < ApplicationRecord
   belongs_to :category, optional: true
   belongs_to :project, optional: true
 
-  validate :correct_date, :debit_or_credit?
   validates :description, :occured_at, presence: true
   validates :debit_amount_cents, :credit_amount_cents,
   numericality: { greater_than_or_equal_to: 0, message: "must be greater than 0" }
+  validates :occured_at, inclusion: { in: DateTime.now..DateTime.now + 5.minutes }
+  validate :debit_or_credit?
 
   monetize :credit_amount_cents, :debit_amount_cents
 
   private
-
-  def correct_date
-    errors.add(:occured_at, 'must be in past or present time') if occured_at > 5.minutes.from_now
-  end
 
   def debit_or_credit?
     if credit_account_id && debit_account_id

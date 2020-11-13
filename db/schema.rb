@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2020_11_09_101108) do
 
   create_table "transactions", force: :cascade do |t|
     t.string "description"
-    t.datetime "occured_at"
+    t.datetime "occured_at", null: false
     t.integer "debit_amount_cents", default: 0, null: false
     t.string "debit_amount_currency", default: "USD", null: false
     t.integer "credit_amount_cents", default: 0, null: false
