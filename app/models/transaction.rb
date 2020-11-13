@@ -11,8 +11,7 @@ class Transaction < ApplicationRecord
   validates :description, :occured_at, presence: true
   validates :debit_amount_cents, :credit_amount_cents,
   numericality: { greater_than_or_equal_to: 0, message: "must be greater than 0" }
-  validates :occured_at, inclusion: { in: DateTime.now..DateTime.now + 5.minutes }
-  validate :debit_or_credit?
+  validate :debit_or_credit?, :correct_date?
 
   monetize :credit_amount_cents, :debit_amount_cents
 
@@ -36,6 +35,11 @@ class Transaction < ApplicationRecord
       errors.add(:base, :credit_or_debit_account_blank,
         message: "Choose debit or credit account")
     end
+  end
+
+  def correct_date?
+    return if occured_at.blank?
+    errors.add(:occured_at, 'must be in past or present time') if occured_at > 5.minutes.from_now
   end
 
 end

@@ -2,14 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Transaction, type: :model do
   describe 'associations' do
-    before :each do
-     @transaction = Transaction.create(occured_at: DateTime.now)
-    end
     it { should belong_to(:project).optional }
     it { should belong_to(:category).optional }
     it { should belong_to(:agent).optional }
     it { should belong_to(:debit_account).class_name('Account').optional }
     it { should belong_to(:credit_account).class_name('Account').optional }
+    it { should belong_to(:author).class_name('AdminUser') }
   end
 
   describe 'validations' do
