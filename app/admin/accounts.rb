@@ -1,3 +1,4 @@
 ActiveAdmin.register Account do
-    permit_params :name
+  menu priority: 2
+  permit_params :name
 end

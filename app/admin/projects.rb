@@ -1,4 +1,4 @@
 ActiveAdmin.register Project do
-  menu parent: "System"
+  menu parent: 'System'
   permit_params :name
 end

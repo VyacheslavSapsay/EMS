@@ -1,7 +1,5 @@
 ActiveAdmin.register Transaction do
-  permit_params :account_id, :agent_id, :author_id, :category_id,
-     :credit_account_id, :credit_amount, :debit_account_id, :debit_amount,
-     :description, :occured_at, :project_id
+  menu priority: 3
 
   index do
     selectable_column
@@ -9,14 +7,32 @@ ActiveAdmin.register Transaction do
     column :description
     column :occured_at
     column :debit_account
-    column("Debit amount", sortable: true) {|t| t.debit_amount.format }
+    column('Debit amount', sortable: true) {|t| t.debit_amount.format }
     column :credit_account
-    column("Credit amount", sortable: true) {|t| t.credit_amount.format }
+    column('Credit amount', sortable: true) {|t| t.credit_amount.format }
     column :agent
     column :category
     column :project
     column :author
     actions
+  end
+
+  show do
+    attributes_table do
+      row :description
+      row :occured_at
+      row :author
+      if transaction.debit_account_id.nil?
+        row :credit_account
+        row ('Credit amount') {|t| t.credit_amount.format }
+      else
+        row :debit_account
+        row ('Debit amount') {|t| t.debit_amount.format }
+      end
+      row :project
+      row :category
+      row :agent
+    end
   end
 
   form title: 'Form' do |f|
@@ -40,5 +56,16 @@ ActiveAdmin.register Transaction do
       f.input :project_id, as: :select, collection: Project.all
       actions
     end
+  end
+
+  sidebar :details, only: :show do
+    attributes_table do
+      row :created_at
+      row :updated_at
+    end
+  end
+
+  permit_params do
+    Pundit.policy(current_admin_user, Transaction).permitted_attributes
   end
 end

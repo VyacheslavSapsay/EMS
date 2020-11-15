@@ -10,4 +10,10 @@ ActiveAdmin.setup do |config|
   config.batch_actions = true
   config.filter_attributes = [:encrypted_password, :password, :password_confirmation]
   config.localize_format = :long
+
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      menu.add label: 'System', priority: 100
+    end
+  end
 end
