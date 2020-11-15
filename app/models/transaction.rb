@@ -20,20 +20,20 @@ class Transaction < ApplicationRecord
   def debit_or_credit?
     if credit_account_id.present? && debit_account_id.present?
       errors.add(:base, :credit_or_debit_account_blank,
-        message: "Choose debit or credit account")
+        message: 'Choose debit or credit account')
     elsif credit_account_id.present? || debit_account_id.present?
       if credit_account_id.present?
         errors.add(:credit_amount, "Can't be blank") if credit_amount == 0
         errors.add(:debit_amount,
-          "must be 0") if credit_amount && debit_amount > 0
+          'must be 0') if credit_amount && debit_amount > 0
       else
         errors.add(:debit_amount, "Can't be blank") if debit_amount == 0
         errors.add(:credit_amount,
-          "must be 0") if credit_amount > 0 && debit_amount
+          'must be 0') if credit_amount > 0 && debit_amount
       end
     else
       errors.add(:base, :credit_or_debit_account_blank,
-        message: "Choose debit or credit account")
+        message: 'Choose debit or credit account')
     end
   end
 
