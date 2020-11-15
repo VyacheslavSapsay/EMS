@@ -7,9 +7,9 @@ ActiveAdmin.register Transaction do
     column :description
     column :occured_at
     column :debit_account
-    column('Debit amount', sortable: true) {|t| t.debit_amount.format }
+    column('Debit amount', sortable: 'debit_amount_cents') {|t| t.debit_amount.format }
     column :credit_account
-    column('Credit amount', sortable: true) {|t| t.credit_amount.format }
+    column('Credit amount', sortable: 'credit_amount_cents') {|u| u.credit_amount.format }
     column :agent
     column :category
     column :project
