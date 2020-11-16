@@ -41,7 +41,7 @@ ActiveAdmin.register Transaction do
       f.object.occured_at = DateTime.now
       f.object.author_id = current_admin_user.id if current_admin_user.user?
       f.input :description
-      f.input :occured_at
+      f.input :occured_at, as: :datetime_picker
       if current_admin_user.super?
         f.input :author_id, as: :select, collection: AdminUser.all
       else
