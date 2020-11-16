@@ -32,13 +32,13 @@ RSpec.describe Transaction, type: :model do
       occured_at: DateTime.now, author_id: 1)
     expect(transaction.valid?).to be_falsey
     expect(transaction.errors[:base].size).to eq(1)
-    expect(transaction.errors[:base]).to include("Choose debit or credit account")
+    expect(transaction.errors[:base]).to include('Choose debit or credit account')
   end
 
   it 'author must exist' do
     transaction = described_class.new(author_id: '')
     expect(transaction).to be_invalid
-    expect(transaction.errors[:author]).to include("must exist")
+    expect(transaction.errors[:author]).to include('must exist')
   end
 
 end

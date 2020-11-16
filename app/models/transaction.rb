@@ -10,7 +10,7 @@ class Transaction < ApplicationRecord
 
   validates :description, :occured_at, presence: true
   validates :debit_amount_cents, :credit_amount_cents,
-  numericality: { greater_than_or_equal_to: 0, message: "must be greater than 0" }
+  numericality: { greater_than_or_equal_to: 0, message: 'must be greater than 0' }
   validate :debit_or_credit?, :correct_date?
 
   monetize :credit_amount_cents, :debit_amount_cents
@@ -25,11 +25,11 @@ class Transaction < ApplicationRecord
       if credit_account_id.present?
         errors.add(:credit_amount, "Can't be blank") if credit_amount == 0
         errors.add(:debit_amount,
-          'must be 0') if credit_amount && debit_amount > 0
+          'must be 0') if credit_amount.present? && debit_amount > 0
       else
         errors.add(:debit_amount, "Can't be blank") if debit_amount == 0
         errors.add(:credit_amount,
-          'must be 0') if credit_amount > 0 && debit_amount
+          'must be 0') if credit_amount > 0 && debit_amount.present?
       end
     else
       errors.add(:base, :credit_or_debit_account_blank,
