@@ -1,3 +1,3 @@
 class Category < ApplicationRecord
-  include Validatable
+  include Transactionable
 end

@@ -1,3 +1,3 @@
 class Agent < ApplicationRecord
-  include Validatable
+  include Transactionable
 end

@@ -1,4 +1,4 @@
-module Validatable
+module Transactionable
   extend ActiveSupport::Concern
 
   included do

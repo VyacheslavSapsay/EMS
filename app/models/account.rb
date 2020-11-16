@@ -1,7 +1,7 @@
 class Account < ApplicationRecord
-  include Validatable
+  include Transactionable
 
   def transactions
-    Transaction.where("credit_account_id = ? OR debit_account_id = ?", self.id, self.id)
+    Transaction.where("credit_account_id = ? OR debit_account_id = ?", id, id)
   end
 end

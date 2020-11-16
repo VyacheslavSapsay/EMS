@@ -1,3 +1,3 @@
 class Project < ApplicationRecord
-  include Validatable
+  include Transactionable
 end

@@ -1,15 +1,19 @@
 ActiveAdmin.register Transaction do
   menu priority: 3
 
+  permit_params do
+    Pundit.policy(current_admin_user, Transaction).permitted_attributes
+  end
+
   index do
     selectable_column
     column :id
     column :description
     column :occured_at
     column :debit_account
-    column('Debit amount', sortable: 'debit_amount_cents') {|t| t.debit_amount.format }
+    column('Debit amount', sortable: 'debit_amount_cents') { |t| t.debit_amount.format }
     column :credit_account
-    column('Credit amount', sortable: 'credit_amount_cents') {|u| u.credit_amount.format }
+    column('Credit amount', sortable: 'credit_amount_cents') { |t| t.credit_amount.format }
     column :agent
     column :category
     column :project
@@ -22,7 +26,7 @@ ActiveAdmin.register Transaction do
       row :description
       row :occured_at
       row :author
-      if transaction.debit_account_id.nil?
+      if transaction.debit_account_id.blank?
         row :credit_account
         row ('Credit amount') {|t| t.credit_amount.format }
       else
@@ -43,11 +47,11 @@ ActiveAdmin.register Transaction do
       f.input :description
       f.input :occured_at, as: :datetime_picker
       if current_admin_user.super?
-        f.input :author_id, as: :select, collection: AdminUser.all
+        f.input :author_id, as: :select, collection: policy_scope(AdminUser)
       else
         f.input :author_id, as: :hidden
       end
-      f.input :credit_account_id, as: :select, collection: Account.all
+      f.input :credit_account_id, as: :select, collection: Pundit.policy_scope(current_admin_user, Account)
       f.input :credit_amount
       f.input :debit_account_id, as: :select, collection: Account.all
       f.input :debit_amount
@@ -63,9 +67,5 @@ ActiveAdmin.register Transaction do
       row :created_at
       row :updated_at
     end
-  end
-
-  permit_params do
-    Pundit.policy(current_admin_user, Transaction).permitted_attributes
   end
 end
