@@ -13,6 +13,8 @@ class Transaction < ApplicationRecord
   numericality: { greater_than_or_equal_to: 0, message: 'must be greater than 0' }
   validate :debit_or_credit?, :correct_date?
 
+  scope :owner, ->(user){ where(author_id: user.id) }
+
   monetize :credit_amount_cents, :debit_amount_cents
 
   private
@@ -41,5 +43,4 @@ class Transaction < ApplicationRecord
     return if occured_at.blank?
     errors.add(:occured_at, 'must be in past or present time') if occured_at > 5.minutes.from_now
   end
-
 end

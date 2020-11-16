@@ -12,14 +12,14 @@ class TransactionPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:account_id, :agent_id, :author_id, :category_id,
-    :credit_account_id, :credit_amount, :debit_account_id, :debit_amount,
-    :description, :occured_at, :project_id]
+    %i[account_id agent_id author_id category_id credit_account_id
+      credit_amount debit_account_id debit_amount description occured_at
+      project_id]
   end
 
   class Scope < Scope
     def resolve
-      user.super? ? scope.all : scope.where(author_id: user.id)
+      user.super? ? scope.all : scope.owner(user)
     end
   end
 end
