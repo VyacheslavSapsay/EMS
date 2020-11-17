@@ -47,16 +47,21 @@ ActiveAdmin.register Transaction do
       f.input :description
       f.input :occured_at, as: :datetime_picker
       if current_admin_user.super?
-        f.input :author_id, as: :select, collection: AdminUser.all
+        f.input :author_id, as: :select,
+          collection: Pundit.policy_scope(current_admin_user, AdminUser)
       else
         f.input :author_id, as: :hidden
       end
       f.input :account_type, as: :select, collection: %i[debit credit]
       f.input :amount, as: :number
-      f.input :account_id, as: :select, collection: Account.all
-      f.input :agent_id, as: :select, collection: Agent.all
-      f.input :category_id, as: :select, collection: Category.all
-      f.input :project_id, as: :select, collection: Project.all
+      f.input :account_id, as: :select,
+        collection: Pundit.policy_scope(current_admin_user, Account)
+      f.input :agent_id, as: :select,
+        collection: Pundit.policy_scope(current_admin_user, Agent)
+      f.input :category_id, as: :select,
+        collection: Pundit.policy_scope(current_admin_user, Category)
+      f.input :project_id, as: :select,
+        collection: Pundit.policy_scope(current_admin_user, Project)
       actions
     end
   end
