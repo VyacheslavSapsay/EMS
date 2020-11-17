@@ -12,7 +12,7 @@ class TransactionPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[account_id agent_id author_id category_id credit_account_id
+    %i[agent_id author_id category_id credit_account_id
       credit_amount debit_account_id debit_amount description occured_at
       project_id]
   end

@@ -51,10 +51,9 @@ ActiveAdmin.register Transaction do
       else
         f.input :author_id, as: :hidden
       end
-      f.input :credit_account_id, as: :select, collection: Pundit.policy_scope(current_admin_user, Account)
-      f.input :credit_amount
-      f.input :debit_account_id, as: :select, collection: Account.all
-      f.input :debit_amount
+      f.input :account_type, as: :select, collection: %i[debit credit]
+      f.input :amount, as: :number
+      f.input :account_id, as: :select, collection: Account.all
       f.input :agent_id, as: :select, collection: Agent.all
       f.input :category_id, as: :select, collection: Category.all
       f.input :project_id, as: :select, collection: Project.all
@@ -66,6 +65,28 @@ ActiveAdmin.register Transaction do
     attributes_table do
       row :created_at
       row :updated_at
+    end
+  end
+
+  controller do
+
+    def create
+      transaction = Transaction.new(permitted_params[:transaction])
+      if params[:transaction][:account_type].present?
+        transaction.write_attribute("#{params[:transaction][:account_type]}_account_id",
+          params[:transaction][:account_id])
+        transaction.write_attribute("#{params[:transaction][:account_type]}_amount_cents",
+          params[:transaction][:amount])
+        if transaction.save
+          redirect_to admin_transaction_path(transaction)
+        else
+          @resource = transaction
+          render :new
+        end
+      else
+        redirect_to new_admin_transaction_path,
+        flash: {error: 'Choose account type'}
+      end
     end
   end
 end

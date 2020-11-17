@@ -19,6 +19,12 @@ class Transaction < ApplicationRecord
 
   private
 
+  def account_type; end
+
+  def amount; end
+
+  def account_id; end
+
   def validate_debit_account
     if debit_account_id.present?
       errors.add(:debit_amount, "Can't be blank") if debit_amount.zero?
