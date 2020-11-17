@@ -39,7 +39,7 @@ ActiveAdmin.register Transaction do
     end
   end
 
-  form title: 'Form' do |f|
+  form do |f|
     inputs 'Info' do
       f.semantic_errors *f.object.errors.keys
       f.object.occured_at ||= DateTime.now
@@ -47,7 +47,7 @@ ActiveAdmin.register Transaction do
       f.input :description
       f.input :occured_at, as: :datetime_picker
       if current_admin_user.super?
-        f.input :author_id, as: :select, collection: policy_scope(AdminUser)
+        f.input :author_id, as: :select, collection: AdminUser.all
       else
         f.input :author_id, as: :hidden
       end

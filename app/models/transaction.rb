@@ -22,14 +22,14 @@ class Transaction < ApplicationRecord
   def validate_debit_account
     if debit_account_id.present?
       errors.add(:debit_amount, "Can't be blank") if debit_amount.zero?
-      errors.add(:debit_amount, 'must be 0') if debit_amount.present? && credit_amount > 0
+      errors.add(:credit_amount, 'must be 0') if debit_amount.present? && credit_amount > 0
     end
   end
 
   def validate_credit_account
     if credit_account_id.present?
       errors.add(:credit_amount, "Can't be blank") if credit_amount.zero?
-      errors.add(:debit_amount, 'must be 0') if credit_amount.present? && debit_amount.zero?
+      errors.add(:debit_amount, 'must be 0') if credit_amount.present? && debit_amount > 0
     end
   end
 
