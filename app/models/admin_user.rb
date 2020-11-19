@@ -6,7 +6,7 @@ class AdminUser < ApplicationRecord
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable
 
-  validates :first_name, :last_name, presence: true
+  validates :first_name, :last_name, :role, presence: true
 
   enumerize :role, in: %i[super user], predicates: true
 

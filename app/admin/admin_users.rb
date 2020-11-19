@@ -29,7 +29,7 @@ ActiveAdmin.register AdminUser do
     end
   end
 
-  form title: 'Form' do |f|
+  form do |f|
     inputs 'Info' do
       input :email
       input :first_name
